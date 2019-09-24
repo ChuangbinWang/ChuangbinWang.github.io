@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[test-hexo-admin]]></title>
-    <url>%2F2019%2F09%2F23%2Ftest-hexo-admin%2F</url>
-    <content type="text"><![CDATA[test hexo admin]]></content>
+    <title><![CDATA[Redis源码阅读记录]]></title>
+    <url>%2F2019%2F09%2F23%2FRedis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[此次源码地址是http://download.redis.io/releases/redis-3.2.8.tar.gz解压完之后，源码目录如图通过阅读文件名大概可以猜测他们的功能。Copying文件可以猜测出它是版本信息文件，我们可以不关心。Runtest、Runtest-cluster、Runtest-sentinel分别对应于“整体测试”、“分布式测试”和“主从切换测试”的脚本。Redis.conf和Seninel.conf分别对应于Redis的配置和主从配置。Deps应该它依赖的库，其目录如下一般来说，依赖库都是开源的第三方库。通过搜索得知Lua脚本引擎。Redis内嵌Lua脚本引擎，那么说明Redis需要Lua语言的解析能力。用户可以定制Lua脚本让Reids去执行，可以看出Redis开放了一个非常自由的接口供外部使用。Linenoise是一个命令行编辑库。这个是的Redis基础功能之一。它的相关资料可见https://github.com/antirez/linenoiseJemalloc是内存管理库。很多开源项目不使用glibc自带的ptmalloc，而是使用Jemalloc或者Tcmalloc这类更高效的内存管理库。Hiredis是Redis数据库的C接口。Geohash-int是一种地理编码算法。它将二维经纬度信息转换成Int型数据。在redis-3.2.8\tests目录下是测试相关的目录redis-3.2.8\utils目录结构：通过阅读主目录下的Makefile文件#Top level makefile, the real shit is at src/Makefiledefault: all.DEFAULT:cd src && $(MAKE) $@install:cd src && $(MAKE) $@.PHONY: install其代码主流程来自于src目录#Default allocatorifeq ($(uname_S),Linux)MALLOC=jemallocelseMALLOC=libcendif#Backwards compatibility for selecting an allocatorifeq ($(USE_TCMALLOC),yes)MALLOC=tcmallocendififeq ($(USE_TCMALLOC_MINIMAL),yes)MALLOC=tcmalloc_minimalendififeq ($(USE_JEMALLOC),yes)MALLOC=jemallocendififeq ($(USE_JEMALLOC),no)MALLOC=libcendiflinux系统上，Redis默认选择的内存管理库是jemalloc，其他系统则是选择libc的ptmalloc。当然还可以通过指定库来修改内存管理库。我们还可以选择tcmalloc或者tcmalloc_minimal。继续阅读MakeFile：#redis-server$(REDIS_SERVER_NAME): $(REDIS_SERVER_OBJ)$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a $(REDIS_GEOHASH_OBJ) $(FINAL_LIBS)#redis-sentinel$(REDIS_SENTINEL_NAME): $(REDIS_SERVER_NAME)$(REDIS_INSTALL) $(REDIS_SERVER_NAME) $(REDIS_SENTINEL_NAME)#redis-check-rdb$(REDIS_CHECK_RDB_NAME): $(REDIS_SERVER_NAME)$(REDIS_INSTALL) $(REDIS_SERVER_NAME) $(REDIS_CHECK_RDB_NAME)#redis-cli$(REDIS_CLI_NAME): $(REDIS_CLI_OBJ)$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/linenoise/linenoise.o $(FINAL_LIBS)#redis-benchmark$(REDIS_BENCHMARK_NAME): $(REDIS_BENCHMARK_OBJ)$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a $(FINAL_LIBS)#redis-check-aof$(REDIS_CHECK_AOF_NAME): $(REDIS_CHECK_AOF_OBJ)$(REDIS_LD) -o $@ $^ $(FINAL_LIBS)上面脚本可以见这个Makefile可以编译出6个不同的最终产物。其中最核心的应该是REDIS_SERVER_NAME对应的编译内容。我们从其需要链接的文件（REDIS_SERVER_OBJ中的内容）来看，程序的入口函数main应该位于server.o文件中。我们可以查看server.c文件学习。]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[elasticsearch底层存储原理]]></title>
