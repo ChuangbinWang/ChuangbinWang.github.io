@@ -36,12 +36,12 @@
 #include <stdint.h>
 #include "sds.h"
 
-// Redis IO APIæŽ¥å£ï¼Œç”¨äºŽå¤šç§æƒ…å†µä¸‹çš„è¯»å†™
+// Redis IO API½Ó¿Ú£¬ÓÃÓÚ¶àÖÖÇé¿öÏÂµÄ¶ÁÐ´
 struct _rio {
     /* Backend functions.
      * Since this functions do not tolerate short writes or reads the return
      * value is simplified to: zero on error, non zero on complete success. */
-    // è¯»ï¼Œå†™ï¼Œè¯»å†™åç§»é‡ã€åˆ·æ–°æ“ä½œçš„å‡½æ•°æŒ‡é’ˆï¼Œéž0è¡¨ç¤ºæˆåŠŸ
+    // ¶Á£¬Ð´£¬¶ÁÐ´Æ«ÒÆÁ¿¡¢³åÏ´²Ù×÷µÄº¯ÊýÖ¸Õë£¬·Ç0±íÊ¾³É¹¦
     size_t (*read)(struct _rio *, void *buf, size_t len);
     size_t (*write)(struct _rio *, const void *buf, size_t len);
     off_t (*tell)(struct _rio *);
@@ -51,44 +51,44 @@ struct _rio {
      * designed so that can be called with the current checksum, and the buf
      * and len fields pointing to the new block of data to add to the checksum
      * computation. */
-    // è®¡ç®—å’Œæ ¡éªŒå‡½æ•°
+    // ¼ÆËãºÍÐ£Ñéº¯Êý
     void (*update_cksum)(struct _rio *, const void *buf, size_t len);
 
     /* The current checksum */
-    // å½“å‰æ ¡éªŒå’Œ
+    // µ±Ç°Ð£ÑéºÍ
     uint64_t cksum;
 
     /* number of bytes read or written */
-    // è¯»æˆ–å†™çš„å­—èŠ‚æ•°
+    // ¶Á»òÐ´µÄ×Ö½ÚÊý
     size_t processed_bytes;
 
     /* maximum single read or write chunk size */
-    // æ¯æ¬¡è¯»æˆ–å†™çš„æœ€å¤§å­—èŠ‚æ•°
+    // Ã¿´Î¶Á»òÐ´µÄ×î´ó×Ö½ÚÊý
     size_t max_processing_chunk;
 
     /* Backend-specific vars. */
-    // è¯»å†™çš„å„ç§å¯¹è±¡
+    // ¶ÁÐ´µÄ¸÷ÖÖ¶ÔÏó
     union {
-        /*å†…å­˜ç¼“å†²åŒº In-memory buffer target. */
+        /*ÄÚ´æ»º³åÇø In-memory buffer target. */
         struct {
-            sds ptr;    //ç¼“å†²åŒºçš„æŒ‡é’ˆï¼Œæœ¬è´¨æ˜¯char *
-            off_t pos;  //ç¼“å†²åŒºçš„åç§»é‡
+            sds ptr;    //»º³åÇøµÄÖ¸Õë£¬±¾ÖÊÊÇchar *
+            off_t pos;  //»º³åÇøµÄÆ«ÒÆÁ¿
         } buffer;
 
-        /*æ ‡å‡†æ–‡ä»¶IO Stdio file pointer target. */
+        /*±ê×¼ÎÄ¼þIO Stdio file pointer target. */
         struct {
-            FILE *fp;       // æ–‡ä»¶æŒ‡é’ˆï¼ŒæŒ‡å‘è¢«æ‰“å¼€çš„æ–‡ä»¶
-            off_t buffered; /* æœ€è¿‘ä¸€æ¬¡åŒæ­¥ä¹‹åŽæ‰€å†™çš„å­—èŠ‚æ•° Bytes written since last fsync. */
-            off_t autosync; /* å†™å…¥è®¾ç½®çš„autosyncå­—èŠ‚åŽï¼Œä¼šæ‰§è¡Œfsync()åŒæ­¥ fsync after 'autosync' bytes written. */
+            FILE *fp;       // ÎÄ¼þÖ¸Õë£¬Ö¸Ïò±»´ò¿ªµÄÎÄ¼þ
+            off_t buffered; /* ×î½üÒ»´ÎÍ¬²½Ö®ºóËùÐ´µÄ×Ö½ÚÊý Bytes written since last fsync. */
+            off_t autosync; /* Ð´ÈëÉèÖÃµÄautosync×Ö½Úºó£¬»áÖ´ÐÐfsync()Í¬²½ fsync after 'autosync' bytes written. */
         } file;
 
-        /*æ–‡ä»¶æè¿°ç¬¦ Multiple FDs target (used to write to N sockets). */
+        /*ÎÄ¼þÃèÊö·û Multiple FDs target (used to write to N sockets). */
         struct {
-            int *fds;       /*æ–‡ä»¶æè¿°ç¬¦æ•°ç»„ File descriptors. */
-            int *state;     /*æ¯ä¸€ä¸ªfdæ‰€å¯¹åº”çš„errno Error state of each fd. 0 (if ok) or errno. */
-            int numfds;     // æ•°ç»„é•¿åº¦ï¼Œæ–‡ä»¶æè¿°ç¬¦ä¸ªæ•°
-            off_t pos;      // åç§»é‡
-            sds buf;        // ç¼“å†²åŒº
+            int *fds;       /*ÎÄ¼þÃèÊö·ûÊý×é File descriptors. */
+            int *state;     /*Ã¿Ò»¸öfdËù¶ÔÓ¦µÄerrno  Error state of each fd. 0 (if ok) or errno. */
+            int numfds;     // Êý×é³¤¶È£¬ÎÄ¼þÃèÊö·û¸öÊý
+            off_t pos;      // Æ«ÒÆÁ¿
+            sds buf;        // »º³åÇø
         } fdset;
     } io;
 };
@@ -98,21 +98,21 @@ typedef struct _rio rio;
 /* The following functions are our interface with the stream. They'll call the
  * actual implementation of read / write / tell, and will update the checksum
  * if needed. */
-// rioçš„æŽ¥å£ï¼Œè°ƒç”¨
+
 static inline size_t rioWrite(rio *r, const void *buf, size_t len) {
     while (len) {
-        // å†™çš„å­—èŠ‚é•¿åº¦ï¼Œä¸èƒ½è¶…è¿‡æ¯æ¬¡è¯»æˆ–å†™çš„æœ€å¤§å­—èŠ‚æ•°max_processing_chunk
+        // Ð´µÄ×Ö½Ú³¤¶È£¬²»ÄÜ³¬¹ýÃ¿´Î¶Á»òÐ´µÄ×î´ó×Ö½ÚÊýmax_processing_chunk
         size_t bytes_to_write = (r->max_processing_chunk && r->max_processing_chunk < len) ? r->max_processing_chunk : len;
-        // æ›´æ–°å’Œæ ¡éªŒ
+        // ¸üÐÂºÍÐ£Ñé
         if (r->update_cksum) r->update_cksum(r,buf,bytes_to_write);
-        // è°ƒç”¨è‡ªèº«çš„writeæ–¹æ³•å†™å…¥
+        // µ÷ÓÃ×ÔÉíµÄwrite·½·¨Ð´Èë
         if (r->write(r,buf,bytes_to_write) == 0)
             return 0;
-        // æ›´æ–°åç§»é‡ï¼ŒæŒ‡å‘ä¸‹ä¸€ä¸ªå†™çš„ä½ç½®
+        // ¸üÐÂÆ«ÒÆÁ¿£¬Ö¸ÏòÏÂÒ»¸öÐ´µÄÎ»ÖÃ
         buf = (char*)buf + bytes_to_writ;
-        // è®¡ç®—å‰©ä½™å†™å…¥çš„é•¿åº¦
+        // ¼ÆËãÊ£ÓàÐ´ÈëµÄ³¤¶È
         len -= bytes_to_write;
-        // æ›´æ–°è¯»æˆ–å†™çš„å­—èŠ‚æ•°
+        // ¸üÐÂ¶Á»òÐ´µÄ×Ö½ÚÊý
         r->processed_bytes += bytes_to_write;
     }
     return 1;
@@ -120,29 +120,29 @@ static inline size_t rioWrite(rio *r, const void *buf, size_t len) {
 
 static inline size_t rioRead(rio *r, void *buf, size_t len) {
     while (len) {
-        // è¯»çš„å­—èŠ‚é•¿åº¦ï¼Œä¸èƒ½è¶…è¿‡æ¯æ¬¡è¯»æˆ–å†™çš„æœ€å¤§å­—èŠ‚æ•°max_processing_chunk
+        // ¶ÁµÄ×Ö½Ú³¤¶È£¬²»ÄÜ³¬¹ýÃ¿´Î¶Á»òÐ´µÄ×î´ó×Ö½ÚÊýmax_processing_chunk
         size_t bytes_to_read = (r->max_processing_chunk && r->max_processing_chunk < len) ? r->max_processing_chunk : len;
-        // è°ƒç”¨è‡ªèº«çš„readæ–¹æ³•è¯»åˆ°bufä¸­
+        // µ÷ÓÃ×ÔÉíµÄread·½·¨¶Áµ½bufÖÐ
         if (r->read(r,buf,bytes_to_read) == 0)
             return 0;
-        // æ›´æ–°å’Œæ ¡éªŒ
+        // ¸üÐÂºÍÐ£Ñé
         if (r->update_cksum) r->update_cksum(r,buf,bytes_to_read);
-        // æ›´æ–°åç§»é‡ï¼ŒæŒ‡å‘ä¸‹ä¸€ä¸ªè¯»çš„ä½ç½®
+        // ¸üÐÂÆ«ÒÆÁ¿£¬Ö¸ÏòÏÂÒ»¸ö¶ÁµÄÎ»ÖÃ
         buf = (char*)buf + bytes_to_read;
-        // è®¡ç®—å‰©ä½™è¦è¯»çš„é•¿åº¦
+        // ¼ÆËãÊ£ÓàÒª¶ÁµÄ³¤¶È
         len -= bytes_to_read;
-        // æ›´æ–°è¯»æˆ–å†™çš„å­—èŠ‚æ•°
+        // ¸üÐÂ¶Á»òÐ´µÄ×Ö½ÚÊý
         r->processed_bytes += bytes_to_read;
     }
     return 1;
 }
 
-// è¿”å›žå½“å‰åç§»é‡
+// ·µ»Øµ±Ç°Æ«ÒÆÁ¿
 static inline off_t rioTell(rio *r) {
     return r->tell(r);
 }
 
-// è°ƒç”¨flushå‡½æ•°
+// µ÷ÓÃflushº¯Êý
 static inline int rioFlush(rio *r) {
     return r->flush(r);
 }
