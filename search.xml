@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[简单说明]]></title>
+    <url>%2F2019%2F09%2F24%2F%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E%2F</url>
+    <content type="text"><![CDATA[由于本人看好像有个博客还是挺好看的，而且自己的笔记是放在有道云的，且也很少整理，在加上，最近在找工作，复习的时候也是总结的过程。所以开这个博客用于将自己的笔记整理出来，一方面是复习复习原来的学习的知识，二是弄一个博客，以后需要找工作的时候，也有点东西可以展示个其他的人。 近期也会抽出时间来将有道云上的东西迁移上来。如果大家发现有什么内容有兴趣或者是错误，欢迎在下面留言区提出。谢谢！！]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[Redis源码阅读-RIO]]></title>
     <url>%2F2019%2F09%2F24%2FRedis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-RIO%2F</url>
     <content type="text"><![CDATA[通过阅读Redis源码和参考他人的讲解后，对Redis的RIO模型进行些许总结。本篇文章参考自：https://blog.csdn.net/men_wen/article/details/71131550首先阅读一下核心结构体：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849struct _rio { // 读，写，读写偏移量、冲洗操作的函数指针，非0表示成功 size_t (*read)(struct _rio *, void *buf, size_t len); size_t (*write)(struct _rio *, const void *buf, size_t len); off_t (*tell)(struct _rio *); int (*flush)(struct _rio *); // 计算和校验函数 void (*update_cksum)(struct _rio *, const void *buf, size_t len); /* The current checksum */ // 当前校验和 uint64_t cksum; /* number of bytes read or written */ // 读或写的字节数 size_t processed_bytes; // 每次读或写的最大字节数 size_t max_processing_chunk; /* Backend-specific vars. */ // 读写的各种对象 union { /*内存缓冲区 In-memory buffer target. */ struct { sds ptr; //缓冲区的指针，本质是char * off_t pos; //缓冲区的偏移量 } buffer; /*标准文件IO Stdio file pointer target. */ struct { FILE *fp; // 文件指针，指向被打开的文件 off_t buffered; /* 最近一次同步之后所写的字节数 Bytes written since last fsync. */ off_t autosync; /* 写入设置的autosync字节后，会执行fsync()同步 fsync after 'autosync' bytes written. */ } file; /*文件描述符 */ struct { int *fds; /*文件描述符数组 File descriptors. */ int *state; /*每一个fd所对应的errno Error state of each fd. 0 (if ok) or errno. */ int numfds; // 数组长度，文件描述符个数 off_t pos; // 偏移量 sds buf; // 缓冲区 } fdset; } io;};typedef struct _rio rio;巧妙的地方是，rio结构体运用封装的方法，定义了几个通用函数，对于使用I/O缓冲区或是文件描述符缓冲区或是标准输入输出I/O的变量只需将对应的函数赋值到rio定义的方法中，以便于统一由rio提供。使用union结构体封装不同的I/O操作对象。需要注意的是对文件描述符进行同步磁盘的过程，是一段段同步的，最大为1024字节rio还提供了校验和计算的函数，设置自动同步字节限制函数（针对文件描述符），rio还基于AOF协议封装了AOF协议，以便于进行AOF持久化的时候进行格式整理。具体函数的原理可以通过阅读AOF协议。同样，贴出源码注释：rio.c源码阅读rio.h源码阅读]]></content>
