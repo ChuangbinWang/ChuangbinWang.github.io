@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[TFS大文件系统-Hash引擎]]></title>
+    <url>%2F2019%2F10%2F08%2FTFS%E5%A4%A7%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-Hash%E5%BC%95%E6%93%8E%2F</url>
+    <content type="text"><![CDATA[本文章是通过阅读淘宝的大文件系统的hash引擎源码而进行的一些总结。主要是关于传统文件系统的特点，传统文件系统面临的问题，淘宝大文件系统的结构。http://note.youdao.com/noteshare?id=327adfe8ca42e044ee61fa6ec15b8041]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[Redis源码阅读-字符串命令]]></title>
     <url>%2F2019%2F10%2F08%2FRedis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4%2F</url>
     <content type="text"><![CDATA[同样的，通过阅读https://blog.csdn.net/men_wen/article/details/70325566 源码。得到以下流程总结。https://mubu.com/doc/9666FOvx_0]]></content>
