@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[linux命令行集]]></title>
+    <url>%2F2019%2F10%2F13%2Flinux%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%9B%86%2F</url>
+    <content type="text"><![CDATA[同样也考察了我shell语句，特别是对awk, sed, grep, find之间的配合使用，好像大部分考察你对shell的熟练程度也都是通过这几个文本处理指令。借此机会我也进行了复习。https://mubu.com/doc/paDuvIX4t0]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[MySql指令集]]></title>
     <url>%2F2019%2F10%2F13%2FMySql%E6%8C%87%E4%BB%A4%E9%9B%86%2F</url>
     <content type="text"><![CDATA[这几天找工作，确实挺难的，难在我的方向上面，自己本身是学嵌入式开发的，后来由于一些特殊情况转到现在这家公司，主要写的是业务后台，但是公司框架老旧，使用的还是c语言，且也不用些流行的工具。所以这次找工作吃了大亏，用c语言写后台开发的公司太少了，要也是一些资历老一点的，专注写底层的。这一次有面试也是投了很久的简历了。这次问的问题主要还是MySql。由于本来自己很少用，基本就是傻眼，这次专门总结一下，画了个关系图。https://mubu.com/doc/iMhBL2wzH0]]></content>
