@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[MySql指令集]]></title>
+    <url>%2F2019%2F10%2F13%2FMySql%E6%8C%87%E4%BB%A4%E9%9B%86%2F</url>
+    <content type="text"><![CDATA[这几天找工作，确实挺难的，难在我的方向上面，自己本身是学嵌入式开发的，后来由于一些特殊情况转到现在这家公司，主要写的是业务后台，但是公司框架老旧，使用的还是c语言，且也不用些流行的工具。所以这次找工作吃了大亏，用c语言写后台开发的公司太少了，要也是一些资历老一点的，专注写底层的。这一次有面试也是投了很久的简历了。这次问的问题主要还是MySql。由于本来自己很少用，基本就是傻眼，这次专门总结一下，画了个关系图。https://mubu.com/doc/iMhBL2wzH0]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[TFS大文件系统-Hash引擎]]></title>
     <url>%2F2019%2F10%2F08%2FTFS%E5%A4%A7%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-Hash%E5%BC%95%E6%93%8E%2F</url>
     <content type="text"><![CDATA[本文章是通过阅读淘宝的大文件系统的hash引擎源码而进行的一些总结。主要是关于传统文件系统的特点，传统文件系统面临的问题，淘宝大文件系统的结构。http://note.youdao.com/noteshare?id=327adfe8ca42e044ee61fa6ec15b8041]]></content>
