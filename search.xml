@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[进程线程知识体系]]></title>
+    <url>%2F2019%2F10%2F17%2F%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%2F</url>
+    <content type="text"><![CDATA[由于多线程，多进程编程也是c++开发工程师必备的技能。最近在复习期间也做了相应整理。https://mubu.com/doc/tg53hT94H0]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[linux命令行集]]></title>
     <url>%2F2019%2F10%2F13%2Flinux%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%9B%86%2F</url>
     <content type="text"><![CDATA[同样也考察了我shell语句，特别是对awk, sed, grep, find之间的配合使用，好像大部分考察你对shell的熟练程度也都是通过这几个文本处理指令。借此机会我也进行了复习。https://mubu.com/doc/paDuvIX4t0]]></content>
