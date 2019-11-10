@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[hexo的源码结构]]></title>
+    <url>%2F2019%2F11%2F10%2Fhexo%E7%9A%84%E6%BA%90%E7%A0%81%E7%BB%93%E6%9E%84%2F</url>
+    <content type="text"><![CDATA[目录结构：12345678910111213141516171819202122.├── .deploy├── public├── scaffolds├── scripts├── source| ├── _drafts| └── _posts├── themes├── _config.yml└── package.jsondeploy：执行hexo deploy命令部署到GitHub上的内容目录public：执行hexo generate命令，输出的静态网页内容目录scaffolds：layout模板文件目录，其中的md文件可以添加编辑scripts：扩展脚本目录，这里可以自定义一些javascript脚本source：文章源码目录，该目录下的markdown和html文件均会被hexo处理。该页面对应repo的根目录，404文件、favicon.ico文件，CNAME文件等都应该放这里，该目录下可新建页面目录。 drafts：草稿文章posts：发布文章themes：主题文件目录_config.yml：全局配置文件，大多数的设置都在这里package.json：应用程序数据，指明hexo的版本等信息，类似于一般软件中的关于按钮next主题123456789101112131415161718192021222324├── .github #git信息├── languages #多语言| ├── default.yml #默认语言| └── zh-Hans.yml #简体中文| └── zh-tw.yml #繁体中文├── layout #布局，根目录下的*.ejs文件是对主页，分页，存档等的控制| ├── _custom #可以自己修改的模板，覆盖原有模板| | ├── _header.swig #头部样式| | ├── _sidebar.swig #侧边栏样式| ├── _macro #可以自己修改的模板，覆盖原有模板| | ├── post.swig #文章模板| | ├── reward.swig #打赏模板| | ├── sidebar.swig #侧边栏模板| ├── _partial #局部的布局| | ├── head #头部模板| | ├── search #搜索模板| | ├── share #分享模板| ├── _script #局部的布局| ├── _third-party #第三方模板| ├── _layout.swig #主页面模板| ├── index.swig #主页面模板| ├── page #页面模板| └── tag.swig #tag模板├── scripts #script源码]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[ssl证书理解]]></title>
     <url>%2F2019%2F11%2F08%2Fssl%E8%AF%81%E4%B9%A6%E7%90%86%E8%A7%A3%2F</url>
     <content type="text"><![CDATA[昨天在配置公司服务器的ssl证书的时候发现了一个问题。起因大概是公司申请的域名里面只有一个是有chain文件的，而其他的域名是没有chain文件，（具体原因应该是申请这些文件很麻烦吧。听老板说的）所以在进行亚马逊智能家居测试的时候就遇到，能访问到我们的https的网站，且显示是安全的，但是亚马逊调用我们的接口获取OAuth2.0的token时，我们这边一直接收不到https请求。通过排查得知，调用方在调用请求之前，会去通过他们系统内部的根证书和从访问的域名出获取chain文件进行验证数字签名的合法性。如果校验不通过或者缺乏chain文件，在进行请求的时候会报unable to verify the first certificate这个错误。借此机会，我去学习了ssl证书的基本知识，并总结了一点结构图，仅供参考。https://mubu.com/doc/708-IhZOg0]]></content>
